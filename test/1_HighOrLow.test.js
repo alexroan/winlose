@@ -16,11 +16,7 @@ contract('HighOrLow', (accounts) => {
 
   let hol
 
-  beforeEach(async () => {
+  beforeEach(async () => {})
 
-  })
-
-  describe('deployment', async () => {
-
-  })
+  describe('deployment', async () => {})
 })
