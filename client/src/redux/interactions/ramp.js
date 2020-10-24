@@ -5,7 +5,7 @@ import { rampOpened, rampSuccess, rampClosed, rampFailed, resetRamp } from '../a
 
 export const topupWallet = async (dispatch, account) => {
     const ramp = new RampInstantSDK({
-        hostAppName: 'Easy Ether',
+        hostAppName: 'High or Low',
         hostLogoUrl: 'https://alexroan.github.io/easy-ether/static/media/logo-white.86143c9b.png',
         variant: 'auto',
         userAddress: account

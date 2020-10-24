@@ -4,8 +4,6 @@ function app(state = {}, action) {
     switch (action.type) {
         case 'RAMP_LOADED':
             return { ...state, ramp: action.ramp }
-        case 'COMP_CETH_LOADED':
-            return { ...state, cEthInstance: action.cEthInstance}
         default:
             return state;
     }
@@ -58,44 +56,6 @@ function withdraw(state = {}, action) {
     }
 }
 
-function compound(state = {}, action) {
-    switch(action.type) {
-        case 'COMP_INTEREST_RATE_SET':
-            return { ...state, apy: action.apy}
-        case 'COMP_CETH_BALANCE_SET':
-            return { ...state, cEthBalance: action.balance}
-        case 'COMP_UNDERLYING_BALANCE_SET':
-            return { ...state, underlyingBalance: action.underlyingBalance}
-        default:
-            return state;
-    }
-}
-
-function aave(state = {}, action) {
-    switch (action.type) {
-        case 'AAVE_ADDRESS_PROVIDER_LOADED':
-            return { ...state, addressProvider: action.instance }
-        case 'AAVE_LENDING_POOL_ADDRESS_LOADED':
-            return { ...state, lendingPoolAddress: action.address}
-        case 'AAVE_LENDING_POOL_LOADED':
-            return { ...state, lendingPool: action.instance }
-        case 'AAVE_LENDING_RESERVE_DATA_LOADED':
-            return { ...state, reserveData: action.data}
-        case 'AAVE_APY_LOADED':
-            return { ...state, apy: action.apy}
-        case 'AAVE_ETH_ATOKEN_ADDRESS_LOADED':
-            return { ...state, ethATokenAddress: action.address}
-        case 'AAVE_ETH_ATOKEN_LOADED':
-            return { ...state, ethAToken: action.instance}
-        case 'AAVE_LENDING_USER_DATA_LOADED':
-            return { ...state, userData: action.data}
-        case 'AAVE_TOTAL_LIQUIDITY_LOADED':
-            return { ...state, userLiquidity: action.liquidity}
-        default:
-            return state;
-    }
-}
-
 function account(state = {}, action) {
     switch (action.type) {
         case 'LOGGING_IN':
@@ -127,7 +87,7 @@ function display(state = {}, action) {
 }
 
 const rootReducer = new combineReducers({
-    app, account, aave, display, topup, compound, deposit, withdraw
+    app, account, display, topup, deposit, withdraw
 });
 
 export default rootReducer;
