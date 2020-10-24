@@ -26,6 +26,7 @@
     "buidler-gas-reporter": "0.1.4-beta.4",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
+    "eslint": "^6.6.0",
     "ganache-time-traveler": "^1.0.14",
     "mocha": "^7.1.0",
     "prettier": "^2.0.5",

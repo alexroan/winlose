@@ -1,0 +1,122 @@
+$body-color: white;
+
+@import "node_modules/bootstrap/scss/bootstrap";
+
+html {
+    height: 100%;
+    body {
+        height: 100%;
+        .web3modal-modal-lightbox{
+            z-index:0;
+        }
+        #root {
+            height: 100%;
+            .app {
+                background: rgb(92,0,89);
+                background: linear-gradient(135deg, rgba(92,0,89,1) 0%, rgba(9,9,121,1) 100%);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                &:before {
+                    background: rgb(92,0,89);
+                    background: linear-gradient(155deg, rgba(0,89,62,1) 0%, rgba(9,9,121,1) 100%);
+                    content: '';
+                    display: block;
+                    height: 100%;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    opacity: 0;
+                    width: 100%;
+                    transition: opacity 1s ease-in-out;
+                }
+
+                &.blue {
+                    &:before {
+                        opacity: 1;
+                    }
+                }
+
+                .navbar {
+                    .navbar-brand{
+                        opacity:1;
+                        transition: opacity 0.25s;
+                        &:hover{
+                            opacity: 0.75;
+                        }
+                    }
+                    span{
+                        color: white!important;
+                        cursor: default;
+                    }
+                }
+
+                .input-group-text {
+                    color: white;
+                    background-color: transparent;
+                }
+                .form-control {
+                    color: white;
+                    background-color: transparent;
+                }
+
+                .btn-primary {
+                    &.btn-sm {
+                        padding: 0.25rem 0.5rem;
+                    }
+                    padding: 1rem 2rem;
+                    border-radius: 2rem;
+                    background-color: transparent;
+                    border-color: white;
+                    transition: background-color 0.25s ease-in-out;
+                    &:hover{
+                        background-color: rgba(255,255,255,0.1);
+                    }
+                    &:active{
+                        background-color: rgba(255,255,255,0.5);
+                    }
+                    &:focus{
+                        box-shadow: none;
+                    }
+                }
+
+                .table{
+                    thead{
+                        th {
+                            border-bottom-width: 1px;
+                            border-top: 0;
+                        }
+                    }
+                    td {
+                        border-top: 0;
+                    }
+                }
+
+                footer{
+                    position: absolute;
+                    bottom: 0;
+                    width: 100%;
+                    a{
+                        text-decoration: none;
+                        transition: opacity 0.25s;
+                        color:white !important;
+                        &:hover{
+                            opacity: 0.75;
+                        }
+                    }
+                    .social-svg{
+                        transition: opacity 0.25s;
+                        opacity: 1;
+                        &:hover{
+                            opacity: 0.75;
+                        }
+                        .social-svg-mask{
+                            fill:white !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
