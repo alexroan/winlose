@@ -23,6 +23,7 @@ contract HighOrLow is ERC1155 {
     mapping(uint => uint) public supplies;
 
     // Constants
+    uint public minimumBet;
     int public target;
     uint public deadline;
     address public feed;
@@ -51,15 +52,22 @@ contract HighOrLow is ERC1155 {
 
     /**
      * @dev Contstruct
+     * @param name string
+     * @param priceTarget uint (must be in same format as oracle price)
+     * @param timeDeadline uint
+     * @param betMinimum uint (WAD format)
+     * @param feedAddress address
      */
     constructor(
         string memory name,
         int priceTarget,
         uint timeDeadline,
+        uint betMinimum,
         address feedAddress
     ) public ERC1155(name) {
         target = priceTarget;
         deadline = timeDeadline;
+        minimumBet = betMinimum;
         feed = feedAddress;
 
         _mint(msg.sender, LOW, WadMath.WAD, "");
@@ -74,7 +82,7 @@ contract HighOrLow is ERC1155 {
      * @return uint amount of tokens
      */
     function bet(uint outcome) external payable beforeDeadline() resultNotConcludedYet() returns (uint) {
-        require(msg.value >= 0.01 ether, "Bet at least 0.01 ETH");
+        require(msg.value >= minimumBet, "Min bet not reached");
         uint tokens = msg.value.wadMul(priceOf(outcome));
         supplies[outcome] = supplies[outcome].add(tokens);
         emit BetPlaced(msg.sender, outcome, msg.value, tokens);
