@@ -78,28 +78,37 @@ contract HighOrLow is ERC1155 {
     }
 
     /**
-     * @dev Check the result to see if has concluded
+     * @dev Get the target price, and the current price
+     * to see if it needs verifying. If the price is above the
+     * target, and the deadline has not yet been reached, someone
+     * should verify it!
+     * @return (int target, int price)
+     */
+    function checkResult() external view returns (int, int) {
+        (,int price,,,) = AggregatorV3Interface(feed).latestRoundData();
+        return (target, price);
+    }
+
+    /**
+     * @dev Verify the result to see if has concluded
      * @return uint result
      */
-    function checkResult() public resultNotConcludedYet() returns (uint) {
+    function verifyResult() public resultNotConcludedYet() returns (uint) {
         (,int price,,uint feedTimestamp,) = AggregatorV3Interface(feed).latestRoundData();
         // If current time is after deadline
         // check if the price feed timestamp is before
         // if it is, and the price is above the target
-        // then result = HIGH, otherwise, LOW
+        // then result = HIGH, otherwise LOW
         if (block.timestamp > deadline) {
-            if (feedTimestamp <= deadline) {
-                if (price > target) {
-                    result = HIGH;
-                }
-                else {
-                    result = LOW;
-                }
+            if (feedTimestamp <= deadline && price > target) {
+                result = HIGH;
             }
-            else {
+            else{
                 result = LOW;
             }
         }
+        // If the current time is before the deadline
+        // just check if the price is higher than the target
         else{
             if (price > target) {
                 result = HIGH;
