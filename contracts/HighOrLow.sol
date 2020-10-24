@@ -83,7 +83,7 @@ contract HighOrLow is ERC1155 {
      */
     function bet(uint outcome) external payable beforeDeadline() resultNotConcludedYet() returns (uint) {
         require(msg.value >= minimumBet, "Min bet not reached");
-        uint tokens = msg.value.wadMul(priceOf(outcome));
+        uint tokens = msg.value.wadDiv(priceOf(outcome));
         supplies[outcome] = supplies[outcome].add(tokens);
         emit BetPlaced(msg.sender, outcome, msg.value, tokens);
         _mint(msg.sender, outcome, tokens, "");
@@ -157,7 +157,7 @@ contract HighOrLow is ERC1155 {
      * @return uint price
      */
     function priceOf(uint outcome) public view returns (uint) {
-        return WadMath.WAD.sub(supplies[outcome].wadDiv(totalSupply()));
+        return supplies[outcome].wadDiv(totalSupply());
     }
 
     /**
