@@ -45,6 +45,10 @@ contract HighOrLow is ERC1155 {
         _;
     }
 
+    event BetPlaced(address punter, uint outcome, uint ethAmount, uint tokensMinted);
+    event ResultConcluded(uint outcome);
+    event RewardClaimed(address punter, uint ethAmount);
+
     /**
      * @dev Contstruct
      */
@@ -73,6 +77,7 @@ contract HighOrLow is ERC1155 {
         require(msg.value >= 0.01 ether, "Bet at least 0.01 ETH");
         uint tokens = msg.value.wadMul(priceOf(outcome));
         supplies[outcome] = supplies[outcome].add(tokens);
+        emit BetPlaced(msg.sender, outcome, msg.value, tokens);
         _mint(msg.sender, outcome, tokens, "");
         return tokens;
     }
@@ -101,20 +106,29 @@ contract HighOrLow is ERC1155 {
         // then result = HIGH, otherwise LOW
         if (block.timestamp > deadline) {
             if (feedTimestamp <= deadline && price > target) {
-                result = HIGH;
+                return setResult(HIGH);
             }
-            else{
-                result = LOW;
-            }
+            return setResult(LOW);
         }
         // If the current time is before the deadline
         // just check if the price is higher than the target
         else{
             if (price > target) {
-                result = HIGH;
+                return setResult(HIGH);
             }
             // else nothing, still ongoing
         }
+        return result;
+    }
+
+    /**
+     * @dev Set the result
+     * @param outcome uint
+     * @return result uint
+     */
+    function setResult(uint outcome) internal resultNotConcludedYet() returns (uint) {
+        result = outcome;
+        emit ResultConcluded(outcome);
         return result;
     }
 
@@ -124,6 +138,7 @@ contract HighOrLow is ERC1155 {
      */
     function claimReward() external resultConcluded() returns (uint) {
         uint amount = balanceOf(msg.sender, result);
+        RewardClaimed(msg.sender, amount);
         Address.sendValue(msg.sender, amount);
         return amount;
     }
