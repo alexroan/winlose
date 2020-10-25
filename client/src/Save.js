@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Container, Row, Col, Button, Table} from 'react-bootstrap';
 import FadeIn from 'react-fade-in';
-import { web3Selector, compoundAPYSelector, balanceSelector, compoundUnderlyingBalanceSelector, accountSelector, aaveAPYSelector, aaveUserLiquiditySelector} from './redux/selectors';
+import { web3Selector, balanceSelector, accountSelector} from './redux/selectors';
 import { convertWeiToEth } from './helpers';
 import { selectPage } from './redux/actions/display';
 import { BackButton } from './BackButton';
@@ -15,10 +15,7 @@ import { topupWallet } from './redux/interactions/ramp';
 //    - Colour schemes on Deposit & Withdraw pages matching those of pools (purple for AAVE, green for Compound)
 class Save extends Component {
     render() {
-        const {dispatch, compoundAPY, balance, web3, compoundUnderlyingBalance, account, aaveAPY, aaveUnderlyingBalance} = this.props;
-
-        const ethCompoundUnderlyingBalance = convertWeiToEth(web3, compoundUnderlyingBalance);
-        const ethAaveUnderlyingBalance = convertWeiToEth(web3, aaveUnderlyingBalance);
+        const {dispatch, balance, web3, account} = this.props;
 
         const withdraw = (protocol) => {
             dispatch(selectPage("Withdraw", protocol));
@@ -57,17 +54,17 @@ class Save extends Component {
                                 <tbody>
                                     <tr>
                                         <td>Compound</td>
-                                        <td>{parseFloat(compoundAPY).toFixed(2)}%</td>
-                                        <td><strong>{parseFloat(ethCompoundUnderlyingBalance).toFixed(2)} ETH</strong></td>
+                                        {/* <td>{parseFloat(compoundAPY).toFixed(2)}%</td> */}
+                                        {/* <td><strong>{parseFloat(ethCompoundUnderlyingBalance).toFixed(2)} ETH</strong></td> */}
                                         <td>{actionButton(() => deposit("compound"), "Deposit", (balance.toString() === "0"))}</td>
-                                        <td>{actionButton(() => withdraw("compound"), "Withdraw", (compoundUnderlyingBalance.toString() === "0"))}</td>
+                                        {/* <td>{actionButton(() => withdraw("compound"), "Withdraw", (compoundUnderlyingBalance.toString() === "0"))}</td> */}
                                     </tr>
                                     <tr>
                                         <td>AAVE</td>
-                                        <td>{parseFloat(aaveAPY).toFixed(2)}%</td>
-                                        <td><strong>{parseFloat(ethAaveUnderlyingBalance).toFixed(2)} ETH</strong></td>
+                                        {/* <td>{parseFloat(aaveAPY).toFixed(2)}%</td> */}
+                                        {/* <td><strong>{parseFloat(ethAaveUnderlyingBalance).toFixed(2)} ETH</strong></td> */}
                                         <td>{actionButton(() => deposit("aave"), "Deposit", (balance.toString() === "0"))}</td>
-                                        <td>{actionButton(() => withdraw("aave"), "Withdraw", (aaveUnderlyingBalance.toString() === "0"))}</td>
+                                        {/* <td>{actionButton(() => withdraw("aave"), "Withdraw", (aaveUnderlyingBalance.toString() === "0"))}</td> */}
                                     </tr>
                                 </tbody>
                             </Table>
@@ -84,10 +81,6 @@ function mapStateToProps(state){
         web3: web3Selector(state),
         balance: balanceSelector(state),
         account: accountSelector(state),
-        compoundAPY: compoundAPYSelector(state),
-        compoundUnderlyingBalance: compoundUnderlyingBalanceSelector(state),
-        aaveAPY: aaveAPYSelector(state),
-        aaveUnderlyingBalance: aaveUserLiquiditySelector(state)
 	}
 }
 

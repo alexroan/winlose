@@ -33,7 +33,7 @@ class App extends Component {
 							alt="logo"
 						/>
 						{' '}
-						<span>Easy Ether</span>
+						<span>High or Low Tokens</span>
 					</Navbar.Brand>
 				</FadeIn>
 			</Navbar>

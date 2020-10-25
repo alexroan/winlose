@@ -72,6 +72,10 @@ function account(state = {}, action) {
             return { ...state, network: action.network }
         case 'CONTRACT_LOADED':
             return { ...state, contract: action.instance }
+        case 'HIGHER_PRICE_LOADED':
+            return { ...state, higherPrice: action.price }
+        case 'LOWER_PRICE_LOADED':
+            return { ...state, lowerPrice: action.price }
         default:
             return state;
     }

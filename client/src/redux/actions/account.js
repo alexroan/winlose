@@ -45,3 +45,17 @@ export function contractLoaded(instance){
         instance
     }
 }
+
+export function higherPriceLoaded(price){
+    return {
+        type: 'HIGHER_PRICE_LOADED',
+        price
+    }
+}
+
+export function lowerPriceLoaded(price){
+    return {
+        type: 'LOWER_PRICE_LOADED',
+        price
+    }
+}

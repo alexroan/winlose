@@ -30,6 +30,12 @@ export const balanceSelector = createSelector(balance, w => w);
 const network = state => get(state, 'account.network', null);
 export const networkSelector = createSelector(network, w => w);
 
+const higherPrice = state => get(state, 'account.higherPrice', 0);
+export const higherPriceSelector = createSelector(higherPrice, w => w);
+
+const lowerPrice = state => get(state, 'account.lowerPrice', 0);
+export const lowerPriceSelector = createSelector(lowerPrice, w => w);
+
 
 //DISPLAY
 const page = state => get(state, 'display.page', "");
@@ -51,30 +57,6 @@ export const topupSuccessSelector = createSelector(topupSuccess, w => w);
 
 const topupResponse = state => get(state, 'topup.response', null);
 export const topupResponseSelector = createSelector(topupResponse, w => w);
-
-//AAVE
-const aaveLendingPool = state => get(state, 'aave.lendingPool', null);
-export const aaveLendingPoolSelector = createSelector(aaveLendingPool, w => w);
-
-const aaveAPY = state => get(state, 'aave.apy', 0);
-export const aaveAPYSelector = createSelector(aaveAPY, w => w);
-
-const aaveUserLiquidity = state => get(state, 'aave.userLiquidity', 0);
-export const aaveUserLiquiditySelector = createSelector(aaveUserLiquidity, w => w);
-
-const aaveEthAToken = state => get(state, 'aave.ethAToken', null);
-export const aaveEthATokenSelector = createSelector(aaveEthAToken, w => w);
-
-
-//COMPOUND
-const compoundAPY = state => get(state, 'compound.apy', "");
-export const compoundAPYSelector = createSelector(compoundAPY, w => w);
-
-const compoundEthBalance = state => get(state, 'compound.cEthBalance', 0);
-export const compoundEthBalanceSelector = createSelector(compoundEthBalance, w => w);
-
-const compoundUnderlyingBalance = state => get(state, 'compound.underlyingBalance', 0);
-export const compoundUnderlyingBalanceSelector = createSelector(compoundUnderlyingBalance, w => w);
 
 
 //WITHDRAW

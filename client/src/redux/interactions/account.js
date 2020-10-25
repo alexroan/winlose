@@ -1,4 +1,4 @@
-import {loggedIn, accountLoaded, balanceLoaded, loggingIn, loginFailed, setNetwork, contractLoaded} from "../actions/account";
+import {loggedIn, accountLoaded, balanceLoaded, loggingIn, loginFailed, setNetwork, contractLoaded, lowerPriceLoaded, higherPriceLoaded} from "../actions/account";
 import { subscribeToAccountsChanging } from "../subscriptions";
 import { getWeb3 } from "../../getWeb3";
 import HighOrLow from "../../contracts/HighOrLow.json";
@@ -47,7 +47,15 @@ export const loadContract = async (dispatch, web3, networkId) => {
         deployedNetwork && deployedNetwork.address,
     );
     dispatch(contractLoaded(instance));
+    loadPrices(dispatch, instance);
     return instance;
+}
+
+export const loadPrices = async (dispatch, contractInstance) => {
+    const lowerPrice = await contractInstance.methods.priceOf(1).call();
+    const higherPrice = await contractInstance.methods.priceOf(2).call();
+    dispatch(lowerPriceLoaded(lowerPrice));
+    dispatch(higherPriceLoaded(higherPrice));
 }
   
 export const loadBalance = async (dispatch, web3, account, network) => {

@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {Container, Row, Col, Button, InputGroup, FormControl} from 'react-bootstrap';
 import FadeIn from 'react-fade-in';
 import { BackButton } from './BackButton';
-import { compoundUnderlyingBalanceSelector, web3Selector, compoundEthInstanceSelector, accountSelector, networkSelector, withdrawingSelector, withdrawConfirmationNumberSelector, redeemValueSelector, pageParameterSelector, aaveUserLiquiditySelector, aaveEthATokenSelector } from './redux/selectors';
+import { web3Selector, accountSelector, networkSelector, withdrawingSelector, withdrawConfirmationNumberSelector, redeemValueSelector, pageParameterSelector } from './redux/selectors';
 import { convertWeiToEth, convertEthToWei } from './helpers';
 import { FadeInSpinner } from './FadeInSpinner';
 import { setRedeemValue } from './redux/actions/withdraw';
@@ -11,10 +11,10 @@ import { setRedeemValue } from './redux/actions/withdraw';
 class Withdraw extends Component{
     render() {
 
-        const {dispatch, web3, underlyingBalance, withdrawing, confirmationNumber, redeemValue, 
-            compoundEthInstance, account, network, pageParameter, aaveEthAToken} = this.props;
+        const {dispatch, web3, withdrawing, confirmationNumber, redeemValue, 
+            account, network, pageParameter} = this.props;
         const weiRedeemValue = convertEthToWei(web3, redeemValue);
-        const ethUnderlyingBalance = convertWeiToEth(web3, underlyingBalance);
+        // const ethUnderlyingBalance = convertWeiToEth(web3, underlyingBalance);
 
         const changeRedeemValue = (e) => dispatch(setRedeemValue(e.target.value));
 
@@ -29,12 +29,12 @@ class Withdraw extends Component{
                         <Row>
                             <Col className="text-center">
                                 <BackButton dispatch={dispatch} pageName="Save" />
-                                <p>Savings Balance: {parseFloat(ethUnderlyingBalance).toFixed(5)} ETH</p>
+                                {/* <p>Savings Balance: {parseFloat(ethUnderlyingBalance).toFixed(5)} ETH</p> */}
                                 <InputGroup className="mb-3">
                                     <InputGroup.Prepend>
                                         <InputGroup.Text id="basic-addon1">ETH</InputGroup.Text>
                                     </InputGroup.Prepend>
-                                    <FormControl onChange={changeRedeemValue} type="number" min="0" max={ethUnderlyingBalance} step="0.00001" aria-describedby="basic-addon1" />
+                                    {/* <FormControl onChange={changeRedeemValue} type="number" min="0" max={ethUnderlyingBalance} step="0.00001" aria-describedby="basic-addon1" /> */}
                                 </InputGroup>
                                 <Button onClick={withdraw}>
                                     Withdraw Savings
@@ -53,25 +53,12 @@ class Withdraw extends Component{
 
 function mapStateToProps(state){
     const pageParameter = pageParameterSelector(state);
-    let underlyingBalance = 0;
-    switch (pageParameter) {
-        case 'compound':
-            underlyingBalance = compoundUnderlyingBalanceSelector(state);
-            break;
-        case 'aave':
-            underlyingBalance = aaveUserLiquiditySelector(state);
-            break;
-        default:
-            break;
-    }
+
 	return {
         web3: web3Selector(state),
-        underlyingBalance: underlyingBalance,
         withdrawing: withdrawingSelector(state),
         confirmationNumber: withdrawConfirmationNumberSelector(state),
         redeemValue: redeemValueSelector(state),
-        compoundEthInstance: compoundEthInstanceSelector(state),
-        aaveEthAToken: aaveEthATokenSelector(state),
         account: accountSelector(state),
         network: networkSelector(state),
         pageParameter: pageParameter
