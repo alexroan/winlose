@@ -1,5 +1,9 @@
 # WinLose
 
+# Current Kovan Interface
+
+[oneclickdapp.com/monitor-kiwi/](oneclickdapp.com/monitor-kiwi/)
+
 ## Install
 
 Clone, cd into directory.
